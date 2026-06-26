@@ -1,0 +1,50 @@
+plugins {
+    // The application plugin gives us `run`, a runnable jar, and a distributable
+    // package (start scripts + libs) under build/distributions — our deploy artifact.
+    id 'application'
+}
+
+group = 'com.codealpha'
+version = '1.0.0'
+
+// Use a Java toolchain so local and CI builds compile against the same JDK.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Dependency management: external libraries resolved from Maven Central.
+    implementation 'com.google.code.gson:gson:2.11.0'          // JSON persistence
+    implementation 'org.apache.commons:commons-lang3:3.17.0'   // string utilities
+
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+application {
+    mainClass = 'com.codealpha.tasktracker.Main'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+}
+
+tasks.named('jar') {
+    manifest {
+        attributes(
+            'Implementation-Title'  : project.name,
+            'Implementation-Version': project.version,
+            'Main-Class'            : application.mainClass.get()
+        )
+    }
+}

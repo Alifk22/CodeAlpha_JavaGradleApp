@@ -1,0 +1,21 @@
+# Working / orchestration files — never publish
+CLAUDE.md
+CONTEXT.md
+tasks/
+*.lessons.md
+
+# Gradle / Java build output
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Local env
+*.log
+.env

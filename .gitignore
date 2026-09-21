@@ -19,3 +19,5 @@ desktop.ini
 # Local env
 *.log
 .env
+.claude/memory/
+.claude/settings.local.json
